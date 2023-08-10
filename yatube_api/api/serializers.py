@@ -5,8 +5,10 @@ from posts.models import Post, Group, Comment
 
 class PostSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(required=False, allow_null=True)
-    author = serializers.StringRelatedField(
-        read_only=True, default=serializers.CurrentUserDefault())
+    author = serializers.SlugRelatedField(
+        slug_field='username',
+        read_only=True,
+        default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Post
@@ -21,8 +23,10 @@ class GroupSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     post = serializers.PrimaryKeyRelatedField(read_only=True)
-    author = serializers.StringRelatedField(
-        read_only=True, default=serializers.CurrentUserDefault()
+    author = serializers.SlugRelatedField(
+        slug_field='username',
+        read_only=True,
+        default=serializers.CurrentUserDefault()
     )
 
     class Meta:
